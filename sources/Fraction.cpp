@@ -5,6 +5,11 @@
 #include <stdexcept>
 using namespace std;
 namespace ariel{
+    int Fraction::gcd(int first, int second){
+        if (second == 0)
+            return first;
+        return gcd(second, first % second);
+    }
     int gcd(int first, int second){
         if (second == 0)
             return first;
@@ -13,8 +18,8 @@ namespace ariel{
     Fraction Fraction::operator+(const Fraction& other){
         int newNumerator = this->numerator * other.denominator + other.numerator * this->denominator;
         int newDenominator = this->denominator * other.denominator;
-        int gcd = this->gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator/gcd, newDenominator/gcd);
+        int to_divide = this->gcd(newNumerator, newDenominator);
+        return Fraction(newNumerator/to_divide, newDenominator/to_divide);
     }
     Fraction Fraction::operator+(double num){
         int newNumerator = this->numerator + num * this->denominator;
@@ -47,38 +52,37 @@ namespace ariel{
         return Fraction(newNumerator/gcd, newDenominator/gcd);
     }
     Fraction operator+(double num, const Fraction& other){
-        int newNumerator = this->numerator + num * this->denominator;
-        int newDenominator = this->denominator;
-        int gcd = this->gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator/gcd, newDenominator/gcd);
+        int newNumerator = other.numerator + num * other.denominator;
+        int newDenominator = other.denominator;
+        int to_divide = ariel::gcd(newNumerator, newDenominator);
+        return Fraction(newNumerator/to_divide, newDenominator/to_divide);
         return other;
     }
     Fraction operator*(double num, const Fraction& other){
-        // int newNumerator = this->numerator * num;
-        // int newDenominator = this->denominator;
-        // int gcd = this->gcd(newNumerator, newDenominator);
-        // return Fraction(newNumerator/gcd, newDenominator/gcd);
-
+        int newNumerator = other.numerator * num;
+        int newDenominator = other.denominator;
+        int to_divide = gcd(newNumerator, newDenominator);
+        return Fraction(newNumerator/to_divide, newDenominator/to_divide);
         return other;
     }
     Fraction Fraction::operator/(const Fraction& other){
-        // int newNumerator = this->numerator * other.denominator;
-        // int newDenominator = this->denominator * other.numerator;
-        // int gcd = this->gcd(newNumerator, newDenominator);
-        // return Fraction(newNumerator/gcd, newDenominator/gcd);
+        int newNumerator = other.numerator * other.denominator;
+        int newDenominator = other.denominator * other.numerator;
+        int to_divide = gcd(newNumerator, newDenominator);
+        return Fraction(newNumerator/to_divide, newDenominator/to_divide);
         return *this;
     }
     Fraction Fraction::operator/(double num){
         int newNumerator = this->numerator;
         int newDenominator = this->denominator * num;
-        int gcd = this->gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator/gcd, newDenominator/gcd);
+        int to_divide = gcd(newNumerator, newDenominator);
+        return Fraction(newNumerator/to_divide, newDenominator/to_divide);
     }
     Fraction operator/(double num, const Fraction& other){
         int newNumerator = num * other.denominator;
         int newDenominator = other.numerator;
-        int gcd = other.gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator/gcd, newDenominator/gcd);
+        int to_divide = gcd(newNumerator, newDenominator);
+        return Fraction(newNumerator/to_divide, newDenominator/to_divide);
         return other;
     }
     bool Fraction::operator==(const Fraction& other){
@@ -106,23 +110,19 @@ namespace ariel{
         return (num * other.denominator < other.numerator);
     }
     bool Fraction::operator>=(const Fraction& other) const{
-        // return (this->numerator * other.denominator >= other.numerator * this->denominator);
-        return true;
+        return (this->numerator * other.denominator >= other.numerator * this->denominator);
     }
     bool Fraction::operator>=(double num){
-        // return (this->numerator >= num * this->denominator);
-        return true;
+        return (this->numerator >= num * this->denominator);
     }
     bool operator>=(double num, const Fraction& other){
         return (num * other.denominator >= other.numerator);
     }
     bool Fraction::operator<=(const Fraction& other){
-        // return (this->numerator * other.denominator <= other.numerator * this->denominator);
-        return true;
+        return (this->numerator * other.denominator <= other.numerator * this->denominator);
     }
     bool Fraction::operator<=(double num){
-        // return (this->numerator <= num * this->denominator);
-        return true;
+        return (this->numerator <= num * this->denominator);
     }
     bool operator<=(double num, const Fraction& other){
         return (num * other.denominator <= other.numerator);
