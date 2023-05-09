@@ -35,16 +35,12 @@ namespace ariel{
         return Fraction(newNumerator/gcd, newDenominator/gcd);
     }
     Fraction Fraction::operator-(double num){
-        int newNumerator = this->numerator - num * this->denominator;
-        int newDenominator = this->denominator;
-        int gcd = this->gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator/gcd, newDenominator/gcd);
+        Fraction other(num);
+        return *this - other;
     }
     Fraction operator-(double num, const Fraction& other){
-        int newNumerator = num * other.denominator - other.numerator;
-        int newDenominator = other.denominator;
-        int to_divide = gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator/to_divide, newDenominator/to_divide);
+        Fraction other2(num);
+        return other2 - other;
     }
     Fraction Fraction::operator*(const Fraction& other){
         int newNumerator = this->numerator * other.numerator;
@@ -60,15 +56,12 @@ namespace ariel{
         return other;
     }
     Fraction operator*(double num, const Fraction& other){
-        int newNumerator = other.numerator * num;
-        int newDenominator = other.denominator;
-        int to_divide = gcd(newNumerator, newDenominator);
-        return Fraction(newNumerator/to_divide, newDenominator/to_divide);
-        return other;
+        Fraction other2(num);
+        return other2 * other;
     }
     Fraction Fraction::operator/(const Fraction& other){
-        int newNumerator = other.numerator * other.denominator;
-        int newDenominator = other.denominator * other.numerator;
+        int newNumerator = this->numerator * other.denominator;
+        int newDenominator = this->denominator * other.numerator;
         int to_divide = gcd(newNumerator, newDenominator);
         return Fraction(newNumerator/to_divide, newDenominator/to_divide);
         return *this;
@@ -147,12 +140,15 @@ namespace ariel{
         return *this;
     }
     std::ostream& operator<<(std::ostream& os, const Fraction& other){
-        // os << other.numerator << "/" << other.denominator;
+        os << other.numerator << "/" << other.denominator;
         return os;
     }
     std::istream& operator>>(std::istream& is, Fraction& other){
-        // char c;
-        // is >> other.numerator >> c >> other.denominator;
+        if(is.fail()){
+            throw std::invalid_argument("Invalid input");
+        }
+        char c;
+        is >> other.numerator >> c >> other.denominator;
         return is;
     }
 }

@@ -21,15 +21,23 @@ namespace ariel{
             if(_denominator == 0){
                 throw std::invalid_argument("Math: can't devide by 0");
             }
+            int to_divide = this->gcd(_numerator, _denominator);
+            this->numerator /= to_divide;
+            this->denominator /= to_divide;
         }
         Fraction(float num){
             int deno = 1;
-            while (num != (int)num){
+            int cnt = 0;
+            while (num != (int)num && cnt < 3){
                 num *= 10;
                 deno *= 10;
+                cnt++;
             }
             this->numerator = num;
             this->denominator = deno;
+            int to_divide = this->gcd(this->numerator, this->denominator);
+            this->numerator /= to_divide;
+            this->denominator /= to_divide;
         }
         Fraction operator+(const Fraction& other);
         friend Fraction operator+(double num, const Fraction& other);
