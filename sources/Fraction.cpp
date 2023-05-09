@@ -144,11 +144,13 @@ namespace ariel{
         return os;
     }
     std::istream& operator>>(std::istream& is, Fraction& other){
-        if(is.fail()){
-            throw std::invalid_argument("Invalid input");
+        int numerator = 0, denominator = 0;
+        is >> numerator >> denominator;
+        if (denominator == 0){
+            throw std::invalid_argument("Invalid argument");
         }
-        char c;
-        is >> other.numerator >> c >> other.denominator;
+        other.numerator = numerator;
+        other.denominator = denominator;
         return is;
     }
 }
