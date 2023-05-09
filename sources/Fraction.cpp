@@ -147,7 +147,7 @@ namespace ariel{
         int numerator = 0, denominator = 0;
         is >> numerator >> denominator;
         if (denominator == 0){
-            throw std::invalid_argument("Invalid argument");
+            throw std::invalid_argument("Invalid input");
         }
         other.numerator = numerator;
         other.denominator = denominator;

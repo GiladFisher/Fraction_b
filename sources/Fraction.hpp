@@ -2,7 +2,9 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <cmath>
 #pragma once
+const int TEN = 10; // because its a MAGIC munber ohhhhh
 using namespace std;
 namespace ariel{
 
@@ -13,13 +15,11 @@ namespace ariel{
         int denominator;
     public:
         int gcd(int first, int second);
-        Fraction(){
-            this->numerator = 1;
-            this->denominator = 1;
+        Fraction(): numerator(1), denominator(1){
         }
         Fraction(int _numerator, const int _denominator): numerator(_numerator), denominator(_denominator){
             if(_denominator == 0){
-                throw std::invalid_argument("Math: can't devide by 0");
+                throw invalid_argument("Math: can't devide by 0");
             }
             int to_divide = this->gcd(_numerator, _denominator);
             this->numerator /= to_divide;
@@ -28,12 +28,12 @@ namespace ariel{
         Fraction(float num){
             int deno = 1;
             int cnt = 0;
-            while (num != (int)num && cnt < 3){
-                num *= 10;
-                deno *= 10;
+            while (num != round(num) && cnt < 3){
+                num *= TEN;
+                deno *= TEN;
                 cnt++;
             }
-            this->numerator = num;
+            this->numerator = static_cast<int>(num);
             this->denominator = deno;
             int to_divide = this->gcd(this->numerator, this->denominator);
             this->numerator /= to_divide;
