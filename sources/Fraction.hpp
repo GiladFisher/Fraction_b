@@ -13,6 +13,10 @@ namespace ariel{
         int denominator;
     public:
         int gcd(int first, int second);
+        Fraction(){
+            this->numerator = 1;
+            this->denominator = 1;
+        }
         Fraction(int _numerator, const int _denominator): numerator(_numerator), denominator(_denominator){
             if(_denominator == 0){
                 throw std::invalid_argument("Math: can't devide by 0");
@@ -39,18 +43,18 @@ namespace ariel{
         Fraction operator/(double num);
         friend Fraction operator/(double num, const Fraction& other);
 
-        bool operator==(const Fraction& other);
+        bool operator==(const Fraction& other) const ;
         bool operator==(double num);
-        bool operator>(const Fraction& other);
+        bool operator>(const Fraction& other)const;
         bool operator>(double num);
         friend bool operator>(double num, const Fraction& other);
-        bool operator<(const Fraction& other);
+        bool operator<(const Fraction& other)const;
         bool operator<(double num);
         friend bool operator<(double num, const Fraction& other);
         bool operator>=(const Fraction& other) const;
         bool operator>=(double num);
         friend bool operator>=(double num, const Fraction& other);
-        bool operator<=(const Fraction& other);
+        bool operator<=(const Fraction& other)const;
         bool operator<=(double num);
         friend bool operator<=(double num, const Fraction& other);
 

@@ -5,6 +5,7 @@
 #include <stdexcept>
 using namespace std;
 namespace ariel{
+    
     int Fraction::gcd(int first, int second){
         if (second == 0)
             return first;
@@ -85,13 +86,13 @@ namespace ariel{
         return Fraction(newNumerator/to_divide, newDenominator/to_divide);
         return other;
     }
-    bool Fraction::operator==(const Fraction& other){
+    bool Fraction::operator==(const Fraction& other)const{
         return (this->numerator == other.numerator && this->denominator == other.denominator);
     }
     bool Fraction::operator==(double num){
         return (this->numerator == num * this->denominator);
     }
-    bool Fraction::operator>(const Fraction& other){
+    bool Fraction::operator>(const Fraction& other)const{
         return (this->numerator * other.denominator > other.numerator * this->denominator);
     }
     bool Fraction::operator>(double num){
@@ -100,7 +101,7 @@ namespace ariel{
     bool operator>(double num, const Fraction& other){
         return (num * other.denominator > other.numerator);
     }
-    bool Fraction::operator<(const Fraction& other){
+    bool Fraction::operator<(const Fraction& other)const{
         return (this->numerator * other.denominator < other.numerator * this->denominator);
     }
     bool Fraction::operator<(double num){
@@ -118,7 +119,7 @@ namespace ariel{
     bool operator>=(double num, const Fraction& other){
         return (num * other.denominator >= other.numerator);
     }
-    bool Fraction::operator<=(const Fraction& other){
+    bool Fraction::operator<=(const Fraction& other)const{
         return (this->numerator * other.denominator <= other.numerator * this->denominator);
     }
     bool Fraction::operator<=(double num){
